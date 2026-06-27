@@ -1,0 +1,826 @@
+\documentclass[12pt,a4paper]{report}
+
+% Packages
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{tikz}
+\begin{itemize}
+    \begin{itemize}
+        \item \usepackage{mathptmx}
+    \end{itemize}
+\end{itemize}
+
+\geometry{
+left=1in,
+right=1in,
+top=1in,
+bottom=1in
+}
+
+\usetikzlibrary{calc}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    frame=single,
+    framesep=5pt,
+    breaklines=true,
+    showstringspaces=false,
+    columns=fullflexible
+}
+
+
+\usepackage{listings}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    frame=single,
+    breaklines=true,
+    columns=fullflexible
+}
+
+
+
+
+
+
+\begin{document}
+
+\begin{titlepage}
+
+% Border
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\centering
+
+% Logo/Header Image (ONLY ONCE)
+\includegraphics[width=0.85\textwidth]{image.png}
+
+\vspace{0.4cm}
+
+{\Large\itshape Mini Project Report}\\[0.3cm]
+
+{\large\itshape on}\\[0.5cm]
+
+{\Huge\bfseries\color{red} STUDENT AND COURSE DATABASE}\\[0.8cm]
+
+{\itshape Submitted as a part of the requirements for the course}\\[0.3cm]
+
+{\Large\bfseries Database Management Systems}\\[0.3cm]
+
+{\large offered by}\\[0.3cm]
+
+{\Large\bfseries Department of Artificial Intelligence and Machine Learning}\\[0.8cm]
+
+{\Large Submitted By}\\[0.5cm]
+
+\begin{tabular}{ll}
+\textbf{\color{orange} SPOORTHI M} & \textbf{1VI24AI043}\\
+\textbf{\color{orange} SRINIDHI U NAIK} & \textbf{1VI24AI044}\\
+\textbf{\color{orange} SRIRAKSHA NR} & \textbf{1VI24AI045}\\
+\textbf{\color{orange} SUKUMAR P} & \textbf{1VI24AI046}\\
+\textbf{\color{orange} SURYA PRAKASH V} & \textbf{1VI24AI047}\\
+\end{tabular}
+
+\vspace{0.8cm}
+
+{\Large Guided By}\\[0.3cm]
+
+{\Large\bfseries Lakshmi Sravani G}\\[0.2cm]
+
+{\large Assistant Professor}\\[0.8cm]
+
+{\Large\bfseries VEMANA INSTITUTE OF TECHNOLOGY}\\[0.2cm]
+
+{\normalsize (Affiliated to VTU \& Approved by AICTE)}\\[0.2cm]
+
+{\normalsize \#1, Mahayogi Vemana Road, Koramangala, Bengaluru -- 560034}\\[0.6cm]
+
+{\Large\bfseries Academic Year 2025--2026}
+
+\end{titlepage}
+
+\newpage
+
+% Border for Page 2
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=1pt]
+($(current page.north west)+(0.8cm,-0.8cm)$)
+rectangle
+($(current page.south east)+(-0.8cm,0.8cm)$);
+
+\draw[line width=0.5pt]
+($(current page.north west)+(1.1cm,-1.1cm)$)
+rectangle
+($(current page.south east)+(-1.1cm,1.1cm)$);
+\end{tikzpicture}
+
+\vspace*{1cm}
+
+\begin{center}
+\Large\textbf{PROBLEM STATEMENT}
+\end{center}
+
+\hrule
+\vspace{0.4cm}
+
+Consider the schema for Student and Course Database:
+
+\vspace{0.2cm}
+
+\begin{itemize}
+\item \textbf{STUDENT} (Name, SNumber, Class, Major)
+\item \textbf{COURSE} (CName, CNumber, Credit\_Hrs, Dept)
+\item \textbf{SECTION} (SectionID, CNumber, Sem, Year, Instructor)
+\item \textbf{GRADE\_REPORT} (SNumber, SectionID, Grade)
+\item \textbf{PREREQUISITE} (CNumber, Prerequisite\_Number)
+\end{itemize}
+
+\vspace{0.2cm}
+
+Solve the following queries using SQL:
+
+\begin{enumerate}
+\item Retrieve the names of all senior students majoring in 'cs'.
+
+\item Retrieve the names of all courses taught by Professor King in 2016 and 2017.
+
+\item For each section taught by Professor King, retrieve the course number, semester, year, and number of students who took the section.
+
+\item Display student names and their grades.
+
+\item Find courses with credit hours greater than 3.
+\end{enumerate}
+
+\vspace{0.6cm}
+
+\begin{center}
+\Large\textbf{INTRODUCTION}
+\end{center}
+
+\hrule
+\vspace{0.4cm}
+
+\noindent
+A Student and Course Database Management System is used to store and manage information related to students, courses, sections, grades, and prerequisites within an educational institution.
+
+\vspace{0.2cm}
+
+\noindent
+Managing academic information manually can be difficult, time-consuming, and prone to errors. A relational database provides a structured approach for storing, retrieving, and maintaining data while ensuring accuracy, consistency, and reduced redundancy.
+
+\vspace{0.2cm}
+
+\noindent
+The database consists of five related tables: STUDENT, COURSE, SECTION, GRADE\_REPORT, and PREREQUISITE. These tables are connected through primary key and foreign key relationships.
+
+\vspace{0.2cm}
+
+\noindent
+Together, they store student details, course information, section schedules, grade records, and prerequisite requirements, forming a complete academic database system.
+
+\vspace{0.2cm}
+
+\noindent
+This mini project demonstrates the use of SQL for retrieving and analyzing academic information. The project highlights the practical application of relational database concepts and SQL in academic data management.
+
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1.0cm}
+
+\section*{Table Creation}
+
+\subsection*{STUDENT}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE STUDENT (
+    name VARCHAR(50),
+    snumber INT PRIMARY KEY,
+    class VARCHAR(20),
+    major VARCHAR(20)
+);
+\end{lstlisting}
+
+\subsection*{COURSE}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE COURSE (
+    cname VARCHAR(50),
+    cnumber INT PRIMARY KEY,
+    credit_hrs INT,
+    dept VARCHAR(20)
+);
+\end{lstlisting}
+
+\subsection*{SECTION}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE SECTION (
+    sectionid INT PRIMARY KEY,
+    cnumber INT,
+    sem VARCHAR(20),
+    year INT,
+    instructor VARCHAR(50),
+    FOREIGN KEY (cnumber)
+    REFERENCES COURSE(cnumber)
+);
+\end{lstlisting}
+
+
+\subsection*{GRADE\_REPORT}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE GRADE_REPORT (
+    snumber INT,
+    sectionid INT,
+    grade CHAR(2),
+    FOREIGN KEY (snumber)
+    REFERENCES STUDENT(snumber),
+    FOREIGN KEY (sectionid)
+    REFERENCES SECTION(sectionid)
+);
+\end{lstlisting}
+
+\newpage
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1.0cm}
+
+\subsection*{PREREQUISITE}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE PREREQUISITE (
+    cnumber INT,
+    prerequisite_number INT,
+    FOREIGN KEY (cnumber)
+    REFERENCES COURSE(cnumber)
+);
+\end{lstlisting}
+
+
+
+\section*{Data Insertion}
+
+\subsection*{STUDENT}
+\begin{lstlisting}[language=SQL]
+INSERT INTO STUDENT VALUES ('Rahul', 1, 'senior', 'cs');
+INSERT INTO STUDENT VALUES ('Anjali', 2, 'junior', 'ece');
+INSERT INTO STUDENT VALUES ('Vikas', 3, 'senior', 'cs');
+\end{lstlisting}
+
+\subsection*{COURSE}
+\begin{lstlisting}[language=SQL]
+INSERT INTO COURSE VALUES ('DBMS', 101, 4, 'CSE');
+INSERT INTO COURSE VALUES ('OS', 102, 3, 'CSE');
+\end{lstlisting}
+
+\subsection*{SECTION}
+\begin{lstlisting}[language=SQL]
+INSERT INTO SECTION VALUES (1, 101, 'Odd', 2016, 'king');
+INSERT INTO SECTION VALUES (2, 102, 'Even', 2017, 'king');
+\end{lstlisting}
+
+\subsection*{GRADE\_REPORT}
+\begin{lstlisting}[language=SQL]
+INSERT INTO GRADE_REPORT VALUES (1, 1, 'A');
+INSERT INTO GRADE_REPORT VALUES (3, 1, 'B');
+INSERT INTO GRADE_REPORT VALUES (2, 2, 'A');
+\end{lstlisting}
+
+\subsection*{PREREQUISITE}
+\begin{lstlisting}[language=SQL]
+INSERT INTO PREREQUISITE VALUES (102, 101);
+\end{lstlisting}
+
+\subsection*{Commit Transaction}
+\begin{lstlisting}[language=SQL]
+COMMIT;
+\end{lstlisting}
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 1}
+
+\textbf{Retrieve the names of all senior students majoring in 'cs'.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The STUDENT table contains information about students, including their name, student number, class, and major. In many academic databases, it is often necessary to identify students belonging to a particular class and academic discipline for reporting and analysis purposes.
+
+This query retrieves the names of students who satisfy two specific conditions. The first condition requires that the student belongs to the \textbf{senior} class, which generally represents students in the final stage of their academic program. The second condition requires that the student's major is \textbf{cs} (Computer Science).
+
+The \textbf{SELECT} statement is used to retrieve the required attribute, namely the student's name. The \textbf{FROM} clause specifies that the data is to be obtained from the STUDENT table. The \textbf{WHERE} clause applies filtering conditions to the records. The logical operator \textbf{AND} ensures that only those records satisfying both conditions simultaneously are selected.
+
+When the query is executed, the database scans the STUDENT table, evaluates each row against the specified conditions, and returns the names of all matching students. This type of query is commonly used for generating departmental reports, identifying eligible students for projects, and preparing academic statistics.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT name
+FROM STUDENT
+WHERE class = 'senior'
+AND major = 'cs';
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|}
+\hline
+\textbf{NAME} \\
+\hline
+Rahul \\
+\hline
+Vikas \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.7cm}
+
+\textbf{Result}
+
+The query was executed successfully and returned the names of students who belong to the \textbf{senior} class and are majoring in \textbf{Computer Science}. Based on the data available in the STUDENT table, the students \textbf{Rahul} and \textbf{Vikas} satisfy both conditions. Therefore, their names are displayed in the result. The output confirms that the filtering conditions specified in the WHERE clause have been applied correctly and that only the required records have been retrieved from the database.
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 2}
+
+\textbf{Retrieve the names of all courses taught by Professor King in 2016 and 2017.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The information about courses is stored in the \textbf{COURSE} table, while details regarding course offerings, instructors, semesters, and academic years are maintained in the \textbf{SECTION} table. To determine the courses taught by Professor King during the years 2016 and 2017, it is necessary to combine information from both tables.
+
+The query uses the \textbf{JOIN} operation to connect the COURSE and SECTION tables through the common attribute \textbf{cnumber}. This allows course names to be matched with their corresponding section details. The \textbf{WHERE} clause filters the records to include only those sections taught by the instructor \textbf{'king'} and offered during the years \textbf{2016} or \textbf{2017}.
+
+The \textbf{IN} operator is used to specify multiple years within a single condition. The \textbf{DISTINCT} keyword ensures that duplicate course names are removed from the result, so each course appears only once even if it was taught in multiple sections. After applying these conditions, the query returns the names of all courses taught by Professor King during the specified academic years.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT DISTINCT C.cname
+FROM COURSE C
+JOIN SECTION S
+ON C.cnumber = S.cnumber
+WHERE S.instructor = 'king'
+AND S.year IN (2016, 2017);
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|}
+\hline
+\textbf{CNAME} \\
+\hline
+DBMS \\
+\hline
+OS \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.7cm}
+
+\textbf{Result}
+
+The query was executed successfully and retrieved the names of all courses taught by Professor King during the academic years 2016 and 2017. By joining the COURSE and SECTION tables and applying the specified filtering conditions, the courses \textbf{DBMS} and \textbf{OS} were identified. The use of the DISTINCT keyword ensured that each course name appeared only once in the final result.
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 3}
+
+\textbf{For each section taught by Professor King, retrieve the course number, semester, year, and number of students who took the section.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The SECTION table contains details about course sections, including the course number, semester, year, and instructor. The GRADE\_REPORT table stores information about students enrolled in different sections. To determine how many students attended each section taught by Professor King, data from both tables must be combined.
+
+The query uses a \textbf{LEFT JOIN} operation between the SECTION and GRADE\_REPORT tables based on the common attribute \textbf{sectionid}. A LEFT JOIN is used to ensure that all sections taught by Professor King are included in the result, even if no students are enrolled in a particular section.
+
+The \textbf{WHERE} clause filters the records to include only those sections taught by the instructor \textbf{'king'}. The \textbf{COUNT()} aggregate function is then used to count the number of student numbers associated with each section. To calculate the count separately for every section, the \textbf{GROUP BY} clause groups records according to section identifier, course number, semester, and year.
+
+As a result, the query provides a summary showing the course number, semester, academic year, and the total number of students enrolled in each section conducted by Professor King.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT S.cnumber,
+       S.sem,
+       S.year,
+       COUNT(G.snumber) AS number_of_students
+FROM SECTION S
+LEFT JOIN GRADE_REPORT G
+ON S.sectionid = G.sectionid
+WHERE S.instructor = 'king'
+GROUP BY S.sectionid,
+         S.cnumber,
+         S.sem,
+         S.year;
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{CNUMBER} &
+\textbf{SEM} &
+\textbf{YEAR} &
+\textbf{NUMBER\_OF\_STUDENTS} \\
+\hline
+101 & Odd  & 2016 & 2 \\
+\hline
+102 & Even & 2017 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.7cm}
+
+
+\textbf{Result}
+
+The query was executed successfully and retrieved the number of students enrolled in each section taught by Professor King.
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 4}
+
+\textbf{Display student names and their grades.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The STUDENT table contains information about students, including their names and student numbers. The GRADE\_REPORT table stores the grades obtained by students in various sections. To display student names along with their corresponding grades, the two tables must be connected using the common attribute \textbf{snumber}.
+
+The query retrieves the student's name from the STUDENT table and the grade from the GRADE\_REPORT table. The \textbf{WHERE} clause establishes the relationship between the tables by matching the student numbers. This allows the database to combine records from both tables and display the required information in a meaningful format.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT ST.name,
+       G.grade
+FROM STUDENT ST, GRADE_REPORT G
+WHERE ST.snumber = G.snumber;
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{NAME} & \textbf{GRADE} \\
+\hline
+Rahul & A \\
+\hline
+Vikas & B \\
+\hline
+Anjali & A \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.6cm}
+
+\textbf{Result}
+
+The query was executed successfully and displayed the names of students along with their respective grades.
+
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 5}
+
+\textbf{Find courses with credit hours greater than 3.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The COURSE table stores information about all courses offered by the institution, including the course name, course number, credit hours, and department. Credit hours represent the academic weight of a course and are often used to determine the workload associated with a subject.
+
+In this query, the objective is to identify courses that have more than 3 credit hours. The \textbf{SELECT} statement is used to retrieve the course name (\textbf{cname}) and the corresponding credit hours (\textbf{credit\_hrs}). The \textbf{WHERE} clause applies a condition to filter only those records where the value of credit hours is greater than 3.
+
+The database examines each record in the COURSE table and compares the credit hour value against the specified condition. Courses satisfying the condition are included in the result set, while all other courses are excluded. Such queries are useful for identifying major or high-credit courses that contribute significantly to a student's academic program.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT cname, credit_hrs
+FROM COURSE
+WHERE credit_hrs > 3;
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{CNAME} & \textbf{CREDIT\_HRS} \\
+\hline
+DBMS & 4 \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.6cm}
+
+\textbf{Result}
+
+The query was executed successfully and displayed all courses having credit hours greater than 3. From the available records in the COURSE table, the course \textbf{DBMS} satisfies the specified condition with \textbf{4 credit hours}. This confirms that the filtering condition in the WHERE clause has been applied correctly and only the required course has been retrieved from the database.
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 6}
+
+\textbf{Retrieve the names of students who received grade 'A'.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The STUDENT table contains information about students such as their names, student numbers, class, and major. The GRADE\_REPORT table stores the grades obtained by students in different course sections. To identify students who have secured a particular grade, information from both tables must be combined using the common attribute \textbf{snumber}.
+
+The query joins the STUDENT and GRADE\_REPORT tables by matching the student numbers present in both tables. The \textbf{WHERE} clause is used to establish the relationship between the tables and to filter the records based on the specified grade value. In this case, only those records where the grade is equal to \textbf{'A'} are selected. The \textbf{SELECT} statement retrieves the names of the students who satisfy this condition.
+
+This type of query is useful for identifying high-performing students, preparing merit lists, generating academic reports, and analyzing student performance. By combining data from multiple tables and applying filtering conditions, the database can efficiently provide meaningful information to users.
+
+When the query is executed, the database searches for matching student records and returns only those students who have obtained the grade \textbf{'A'} in their respective course sections.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT S.name
+FROM STUDENT S, GRADE_REPORT G
+WHERE S.snumber = G.snumber
+AND G.grade = 'A';
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|}
+\hline
+\textbf{NAME} \\
+\hline
+Rahul \\
+\hline
+Anjali \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.7cm}
+
+\textbf{Result}
+
+The query was executed successfully and displayed the names of students who obtained grade \textbf{'A'} in their course sections. The result shows that \textbf{Rahul} and \textbf{Anjali} satisfied the specified condition and were therefore included in the output. This demonstrates the use of table joining and filtering techniques to retrieve specific academic information from the database. The output confirms that the query correctly identified all students who achieved the highest grade and displayed their names successfully.
+
+\newpage
+
+% ---------- Border ----------
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=2pt]
+($(current page.north west)+(1cm,-1cm)$)
+rectangle
+($(current page.south east)+(-1cm,1cm)$);
+
+\draw[line width=0.8pt]
+($(current page.north west)+(1.3cm,-1.3cm)$)
+rectangle
+($(current page.south east)+(-1.3cm,1.3cm)$);
+\end{tikzpicture}
+
+\vspace{-1cm}
+
+\section*{Question 7}
+
+\textbf{Display the number of students in each class.}
+
+\vspace{0.4cm}
+
+\textbf{Explanation}
+
+The STUDENT table stores information about students, including their name, student number, class, and major. Educational institutions often require summarized information about the distribution of students across different classes for academic planning and administrative purposes.
+
+The objective of this query is to determine the total number of students belonging to each class category. To achieve this, the query uses the \textbf{COUNT()} aggregate function, which counts the number of records present in each group. The \textbf{GROUP BY} clause is used to group all students according to their class value, such as junior or senior.
+
+When the query is executed, the database scans all records in the STUDENT table and organizes them into separate groups based on the class attribute. The COUNT() function then calculates the number of students present in each group. The resulting output displays the class name along with the corresponding number of students.
+
+Such aggregate queries are widely used in database systems to generate statistical summaries, prepare reports, and analyze data efficiently. Instead of displaying individual student records, the query provides a concise overview of student distribution among different classes.
+
+\vspace{0.4cm}
+
+\textbf{SQL Query}
+
+\begin{lstlisting}[language=SQL]
+SELECT class,
+       COUNT(*) AS total_students
+FROM STUDENT
+GROUP BY class;
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\textbf{Output}
+
+\vspace{0.3cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{CLASS} & \textbf{TOTAL\_STUDENTS} \\
+\hline
+senior & 2 \\
+\hline
+junior & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{0.7cm}
+
+\textbf{Result}
+
+The query was executed successfully and displayed the total number of students belonging to each class category. The output shows that there are \textbf{2 students} in the \textbf{senior} class and \textbf{1 student} in the \textbf{junior} class. This confirms that the COUNT() aggregate function and GROUP BY clause were applied correctly to summarize the student data. The generated result provides a clear overview of the distribution of students across different classes and demonstrates the use of aggregation operations in SQL for producing meaningful statistical information.
+
+\end{document}
+
+
